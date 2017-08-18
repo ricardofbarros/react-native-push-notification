@@ -67,7 +67,13 @@ NotificationsComponent.prototype.addEventListener = function(type: string, handl
 		listener =  DeviceEventEmitter.addListener(
 			DEVICE_NOTIF_EVENT,
 			function(notifData) {
-				var data = JSON.parse(notifData.dataJSON);
+				var data;
+				try {
+				   data = JSON.parse(notifData.dataJSON);
+				} catch (e) {
+				   return console.error(e);
+				}
+
 				handler(data);
 			}
 		);
@@ -82,7 +88,12 @@ NotificationsComponent.prototype.addEventListener = function(type: string, handl
 		listener = DeviceEventEmitter.addListener(
 			REMOTE_FETCH_EVENT,
 			function(notifData) {
-				var notificationData = JSON.parse(notifData.dataJSON)
+				var notificationData;
+				try {
+			 	  notificationData = JSON.parse(notifData.dataJSON);
+				} catch (e) {
+				  return console.error(e);
+				}
 				handler(notificationData);
 			}
 		);
@@ -112,4 +123,3 @@ module.exports = {
 	state: false,
 	component: new NotificationsComponent()
 };
-
